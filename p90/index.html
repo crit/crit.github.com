@@ -10,11 +10,13 @@
   <style>.template {display:none;}</style>
 </head>
 <body>
-  <div class="container"></div>
+  <div class="container">
+  	<h1>Workouts</h1>
+  </div>
   
   <div id="template-week" class="template">
-  	<h1></h1>
-    <table class="table table-bordered">
+  	<h2></h2>
+    <table class="table table-striped">
       <thead>
         <th>Day</th>
         <th>Disc</th>
@@ -57,14 +59,16 @@
 			$('tbody', tpl).append(self.fill(row, data));
 		});
 
-		$('h1', tpl).text(week);
+		$('h2', tpl).text(week);
 		$(tpl).attr('id', id).show();
 
 		self.stage('add week', tpl);
 	};
 
 	self.status = function(day) {
-		if (day.status == 'Ready') return "<button>Ready</button>";
+		if (day.status === 0) return '<button class="btn">Ready</button>';
+		if (day.status === 1) return '<button class="btn btn-success">Done</button>';
+		if (day.status === 2) return '<button class="btn btn-warning">Done</button>';
 	};
 
 	self.stage = function(cmd, val) {

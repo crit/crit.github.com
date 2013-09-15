@@ -1,90 +1,122 @@
 {
-  "projects" : {
-    "store" : {
-      "difficulty" : 10,
-      "server" : {
-        "host" : "aws",
-        "os" : "linux",
-        "language" : "go"
-      }
+  "Week 3" : {
+    "Day 2" : {
+      "disc" : "Plyometrics",
+      "status" : 0
     },
-    "leads" : {
-      "difficulty" : 10,
-      "server" : {
-        "host" : "aws",
-        "os" : "linux",
-        "language" : "go"
-      }
+    "Day 5" : {
+      "disc" : "Legs and Back, Ab Ripper",
+      "status" : 0
     },
-    "blog" : {
-      "difficulty" : 6,
-      "server" : {
-        "host" : "github",
-        "os" : "linux",
-        "language" : "jekyll/md"
-      }
+    "Day 4" : {
+      "disc" : "Yoga",
+      "status" : 0
     },
-    "msoft" : {
-      "difficulty" : 10,
-      "server" : {
-        "host" : "aws",
-        "os" : "linux",
-        "language" : "go"
-      }
+    "Day 7" : {
+      "disc" : "Stretch",
+      "status" : 0
     },
-    "tasks" : {
-      "difficulty" : 3,
-      "server" : {
-        "host" : "aws",
-        "os" : "linux",
-        "language" : "go"
-      }
+    "Day 1" : {
+      "disc" : "Chest and Back, Ab Ripper",
+      "status" : 0
     },
-    "cms" : {
-      "difficulty" : 10,
-      "server" : {
-        "host" : "aws",
-        "os" : "linux",
-        "language" : "go"
-      }
+    "Day 3" : {
+      "disc" : "Shoulders and Arms, Ab Ripper",
+      "status" : 0
+    },
+    "Day 6" : {
+      "disc" : "Kenpo",
+      "status" : 0
     }
   },
-  "p90" : {
-    "Week 1": {
-      "Day 1": {"disc": "Chest and Back, Ab Ripper", "status": "Ready"},
-      "Day 2": {"disc": "Plyometrics", "status": "Ready" },
-      "Day 3": {"disc": "Shoulders and Arms, Ab Ripper", "status": "Ready"},
-      "Day 4": {"disc": "Yoga", "status": "Ready"},
-      "Day 5": {"disc": "Legs and Back, Ab Ripper", "status": "Ready"},
-      "Day 6": {"disc": "Kenpo", "status": "Ready"},
-      "Day 7": {"disc": "Stretch", "status": "Ready"}
+  "Week 2" : {
+    "Day 2" : {
+      "disc" : "Plyometrics",
+      "status" : 0
     },
-    "Week 2": {
-      "Day 1": {"disc": "Chest and Back, Ab Ripper", "status": "Ready"},
-      "Day 2": {"disc": "Plyometrics", "status": "Ready" },
-      "Day 3": {"disc": "Shoulders and Arms, Ab Ripper", "status": "Ready"},
-      "Day 4": {"disc": "Yoga", "status": "Ready"},
-      "Day 5": {"disc": "Legs and Back, Ab Ripper", "status": "Ready"},
-      "Day 6": {"disc": "Kenpo", "status": "Ready"},
-      "Day 7": {"disc": "Stretch", "status": "Ready"}
+    "Day 5" : {
+      "disc" : "Legs and Back, Ab Ripper",
+      "status" : 0
     },
-    "Week 3": {
-      "Day 1": {"disc": "Chest and Back, Ab Ripper", "status": "Ready"},
-      "Day 2": {"disc": "Plyometrics", "status": "Ready" },
-      "Day 3": {"disc": "Shoulders and Arms, Ab Ripper", "status": "Ready"},
-      "Day 4": {"disc": "Yoga", "status": "Ready"},
-      "Day 5": {"disc": "Legs and Back, Ab Ripper", "status": "Ready"},
-      "Day 6": {"disc": "Kenpo", "status": "Ready"},
-      "Day 7": {"disc": "Stretch", "status": "Ready"}
+    "Day 4" : {
+      "disc" : "Yoga",
+      "status" : 0
     },
-    "Week 4": {
-      "Day 1": {"disc": "Yoga", "status": "Ready"},
-      "Day 2": {"disc": "Core Synergistics", "status": "Ready" },
-      "Day 3": {"disc": "Kenpo", "status": "Ready"},
-      "Day 4": {"disc": "Stretch", "status": "Ready"},
-      "Day 5": {"disc": "Core Synergistics", "status": "Ready"},
-      "Day 6": {"disc": "Yoga", "status": "Ready"},
-      "Day 7": {"disc": "Stretch", "status": "Ready"}
+    "Day 7" : {
+      "disc" : "Stretch",
+      "status" : 0
+    },
+    "Day 1" : {
+      "disc" : "Chest and Back, Ab Ripper",
+      "status" : 0
+    },
+    "Day 3" : {
+      "disc" : "Shoulders and Arms, Ab Ripper",
+      "status" : 0
+    },
+    "Day 6" : {
+      "disc" : "Kenpo",
+      "status" : 0
+    }
+  },
+  "Week 4" : {
+    "Day 2" : {
+      "disc" : "Core Synergistics",
+      "status" : 0
+    },
+    "Day 5" : {
+      "disc" : "Core Synergistics",
+      "status" : 0
+    },
+    "Day 4" : {
+      "disc" : "Stretch",
+      "status" : 0
+    },
+    "Day 7" : {
+      "disc" : "Stretch",
+      "status" : 0
+    },
+    "Day 1" : {
+      "disc" : "Yoga",
+      "status" : 0
+    },
+    "Day 3" : {
+      "disc" : "Kenpo",
+      "status" : 0
+    },
+    "Day 6" : {
+      "disc" : "Yoga",
+      "status" : 0
+    }
+  },
+  "Week 1" : {
+    "Day 2" : {
+      "disc" : "Plyometrics",
+      "status" : 0
+    },
+    "Day 5" : {
+      "disc" : "Legs and Back, Ab Ripper",
+      "status" : 0
+    },
+    "Day 4" : {
+      "disc" : "Yoga",
+      "status" : 0
+    },
+    "Day 7" : {
+      "disc" : "Stretch",
+      "status" : 0
+    },
+    "Day 1" : {
+      "disc" : "Chest and Back, Ab Ripper",
+      "status" : 0
+    },
+    "Day 3" : {
+      "disc" : "Shoulders and Arms, Ab Ripper",
+      "status" : 0
+    },
+    "Day 6" : {
+      "disc" : "Kenpo",
+      "status" : 0
     }
   }
 }
