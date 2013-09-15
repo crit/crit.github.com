@@ -66,9 +66,9 @@
 	};
 
 	self.status = function(day) {
-		if (day.status === 0) return '<button class="btn">Ready</button>';
-		if (day.status === 1) return '<button class="btn btn-success">Done</button>';
-		if (day.status === 2) return '<button class="btn btn-warning">Done</button>';
+		if (day.status === 0) return '<button type="button" class="btn">Ready</button>';
+		if (day.status === 1) return '<button type="button" class="btn btn-success">Done</button>';
+		if (day.status === 2) return '<button type="button" class="btn btn-warning">Done</button>';
 	};
 
 	self.stage = function(cmd, val) {
