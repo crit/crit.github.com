@@ -10,7 +10,91 @@
 </head>
 <body>
   <div class="container">
-    
+    <h1>Week 1</h1>
+    <table class="table table-bordered">
+      <thead>
+        <th>Day</th>
+        <th>Disc</th>
+        <th>Status</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>1</td>
+          <td>Chest and Back, Ab Ripper</td>
+          <td>Ready</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>Plyometrics</td>
+          <td>Ready</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>Shoulders and Arms, Ab Ripper</td>
+          <td>DReady</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>Yoga</td>
+          <td>Ready</td>
+        </tr>
+        <tr>
+          <td>5</td>
+          <td>Legs and Back, Ab Ripper</td>
+          <td>Ready</td>
+        </tr>
+        <tr>
+          <td>6</td>
+          <td>Kenpo</td>
+          <td>Ready</td>
+        </tr>
+        <tr>
+          <td>7</td>
+          <td>Stretch</td>
+          <td>Ready</td>
+        </tr>
+      </tbody>
+    </table>
   </div>
+<script>
+(function($, undefined){
+	var self = {};
+
+	// simple string templates
+	self.fill = function(src, obj){
+		$.each(obj, function(k,v){
+			src = src.replace('[:'+k+']', v);
+		});
+		return src;
+	};
+
+	self.ref = new Firebase("https://crit.firebaseio.com/p90");
+
+	self.init = function(){
+		self.ref.on('value', self.build);
+	};
+
+	self.build = function(snapshot) {
+		console.log(snapshot.val());
+		$.each(snapshot.val(), self.week);
+	};
+
+	self.week = function(week, day) {
+		console.log(week, day);
+		$.each(day, self.day);
+	};
+
+	self.day = function(day, data) {
+		console.log(day, data);
+	};
+
+	self.stage = function(cmd, val) {
+		val = val || false;
+		if (cmd == 'add') $('table tbody').append(val);
+	}
+
+	$(self.init); // ON DOM LOAD
+})(jQuery);
+</script>
 </body>
 </html>
