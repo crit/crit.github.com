@@ -47,18 +47,24 @@
 	};
 
 	self.render = function(week, days) {
-		var tpl = $('#template-week').clone();
+		var tpl = $('#template-week').clone(),
+		id = week.replace(' ','').toLowerCase();
 
 		$.each(days, function(day, data){
 			var row = "<tr><td>[:day]</td><td>[:disc]</td><td>[:status]</td></tr>";
 			data.day = day;
+			data.status = self.status(data);
 			$('tbody', tpl).append(self.fill(row, data));
 		});
 
 		$('h1', tpl).text(week);
-		$(tpl).attr('id', week.replace(' ','').toLowerCase()).show();
+		$(tpl).attr('id', id).show();
 
 		self.stage('add week', tpl);
+	};
+
+	self.status = function(day) {
+		if (day.status == 'Ready') return "<button>Ready</button>";
 	};
 
 	self.stage = function(cmd, val) {
