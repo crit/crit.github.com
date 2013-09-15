@@ -7,55 +7,23 @@
   <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
   <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
   <script src='https://cdn.firebase.com/v0/firebase.js'></script>
+  <style>.template {display:none;}</style>
 </head>
 <body>
-  <div class="container">
-    <h1>Week 1</h1>
+  <div class="container"></div>
+  
+  <div id="template-week" class="template">
+  	<h1></h1>
     <table class="table table-bordered">
       <thead>
         <th>Day</th>
         <th>Disc</th>
         <th>Status</th>
       </thead>
-      <tbody>
-        <tr>
-          <td>1</td>
-          <td>Chest and Back, Ab Ripper</td>
-          <td>Ready</td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>Plyometrics</td>
-          <td>Ready</td>
-        </tr>
-        <tr>
-          <td>3</td>
-          <td>Shoulders and Arms, Ab Ripper</td>
-          <td>DReady</td>
-        </tr>
-        <tr>
-          <td>4</td>
-          <td>Yoga</td>
-          <td>Ready</td>
-        </tr>
-        <tr>
-          <td>5</td>
-          <td>Legs and Back, Ab Ripper</td>
-          <td>Ready</td>
-        </tr>
-        <tr>
-          <td>6</td>
-          <td>Kenpo</td>
-          <td>Ready</td>
-        </tr>
-        <tr>
-          <td>7</td>
-          <td>Stretch</td>
-          <td>Ready</td>
-        </tr>
-      </tbody>
+      <tbody></tbody>
     </table>
   </div>
+
 <script>
 (function($, undefined){
 	var self = {};
@@ -75,22 +43,27 @@
 	};
 
 	self.build = function(snapshot) {
-		console.log(snapshot.val());
-		$.each(snapshot.val(), self.week);
+		$.each(snapshot.val(), self.render);
 	};
 
-	self.week = function(week, day) {
-		console.log(week, day);
-		$.each(day, self.day);
-	};
+	self.render = function(week, days) {
+		var tpl = $('#template-week').clone();
 
-	self.day = function(day, data) {
-		console.log(day, data);
+		$.each(days, function(day, data){
+			var row = "<tr><td>[:day]</td><td>[:disc]</td><td>[:status]</td></tr>";
+			data.day = day;
+			$('tbody', tpl).append(self.fill(row, data));
+		});
+
+		$('h1', tpl).text(week);
+		$(tpl).attr('id', week.replace(' ','').toLowerCase()).show();
+
+		self.stage('add week', tpl);
 	};
 
 	self.stage = function(cmd, val) {
 		val = val || false;
-		if (cmd == 'add') $('table tbody').append(val);
+		if (cmd == 'add week') $('.container').append(val);
 	}
 
 	$(self.init); // ON DOM LOAD
