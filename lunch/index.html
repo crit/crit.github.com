@@ -8,7 +8,6 @@
   <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/spacelab/bootstrap.min.css" rel="alternate stylesheet" title="spacelab">
   <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/journal/bootstrap.min.css" rel="alternate stylesheet" title="journal">
   <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/flatly/bootstrap.min.css" rel="alternate stylesheet" title="flatly">
-  <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/simplex/bootstrap.min.css" rel="alternate stylesheet" title="simplex">
   <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/readable/bootstrap.min.css" rel="alternate stylesheet" title="readable">
   <style>body {padding-top: 50px;}</style>
 </head>
@@ -27,43 +26,30 @@
         <ul class="nav navbar-nav">
           <li><a href="new.html">Enter New </a></li>
           <li><a href="data.html">View Data</a></li>
+          <li class="dropdown">
+          <a id="stylesDrop" role="button" data-toggle="dropdown" href="#">Styles <b class="caret"></b></a>
+          <ul id="stylesMenu" class="dropdown-menu" role="menu" aria-labelledby="stylesDrop">
+          	<li role="presentation"><a role="menuitem" tabindex="-1" href="#amelia">Amelia</a></li>
+          	<li role="presentation"><a role="menuitem" tabindex="-1" href="#cerulean">Cerulean</a></li>
+          	<li role="presentation"><a role="menuitem" tabindex="-1" href="#spacelab">Spacelab</a></li>
+          	<li role="presentation"><a role="menuitem" tabindex="-1" href="#journal">Journal</a></li>
+          	<li role="presentation"><a role="menuitem" tabindex="-1" href="#flatly">Flatly</a></li>
+          	<li role="presentation"><a role="menuitem" tabindex="-1" href="#readable">Readable</a></li>
+          </ul>
+        </li>
         </ul>
       </div><!--/.nav-collapse -->
     </div>
   </div>
 
   <div class="container">
-<h3>App Styles</h3>
-<div class="btn-group btn-group-justified" data-toggle="buttons">
-  <label class="btn btn-info active">
-    <input type="radio" name="styles" value="amelia"> Amelia
-  </label>
-  <label class="btn btn-info">
-    <input type="radio" name="styles" value="cerulean"> Cerulean
-  </label>
-  <label class="btn btn-info">
-    <input type="radio" name="styles" value="spacelab"> Spacelab
-  </label>
-  <label class="btn btn-info">
-    <input type="radio" name="styles" value="journal"> Journal
-  </label>
-  <label class="btn btn-info">
-    <input type="radio" name="styles" value="flatly"> Flatly
-  </label>
-  <label class="btn btn-info">
-    <input type="radio" name="styles" value="simplex"> Simplex
-  </label>
-  <label class="btn btn-info">
-    <input type="radio" name="styles" value="readable"> Readable
-  </label>
-</div>
 <h3>Price</h3>
 <div class="btn-group btn-group-justified" data-toggle="buttons">
   <label class="btn btn-default active">
     <input type="radio" name="price" value="cheap" checked="checked"> On a Budget
   </label>
   <label class="btn btn-default">
-    <input type="radio" name="price" value="any"> Quality Over Price
+    <input type="radio" name="price" value="any"> Not Worried
   </label>
 </div>
 <h3>Service</h3>
@@ -102,17 +88,19 @@
 	var self = {};
 
 	self.init = function(){
-		$('input[name=styles]').parent().bind('click', self.parse);
+		$('#stylesMenu a').bind('click', self.parse);
 	};
 
-	self.parse = function() {
-		self.style = $('input', this).val();
+	self.parse = function(e) {
+		e.preventDefault();
+		self.style = $(this).attr('href');
 		$('link').each(self.change);
+		return;
 	};
 
 	self.change = function() {
 		this.disabled = true;
-		if (self.style == this.title) this.disabled = false;
+		if (self.style == "#" + this.title) this.disabled = false;
 	};
 
 	$(self.init) // ON DOM LOAD
