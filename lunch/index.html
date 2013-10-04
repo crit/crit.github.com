@@ -27,36 +27,35 @@
   </div>
 
   <div class="container">
-<h1>Lets Roll! <small>Random Food Chooser</small></h1>
 <h3>Price</h3>
 <div class="btn-group btn-group-justified" data-toggle="buttons">
   <label class="btn btn-default active">
-    <input type="radio" name="price" checked="checked"> Cheap
+    <input type="radio" name="price" value="cheap" checked="checked"> On a Budget
   </label>
   <label class="btn btn-default">
-    <input type="radio" name="price"> Costly
+    <input type="radio" name="price" value="any"> Quality Over Price
   </label>
 </div>
 <h3>Service</h3>
 <div class="btn-group btn-group-justified" data-toggle="buttons">
   <label class="btn btn-default active">
-    <input type="radio" name="service" checked="checked"> Fast
+    <input type="radio" name="service" value="fast" checked="checked"> Food Now
   </label>
   <label class="btn btn-default">
-    <input type="radio" name="service"> Slow
+    <input type="radio" name="service" value="any"> Sit and Relax
   </label>
 </div>
 <h3>Distance</h3>
 <div class="btn-group btn-group-justified" data-toggle="buttons">
   <label class="btn btn-default active">
-    <input type="radio" name="distance" checked="checked"> Near
+    <input type="radio" name="distance" value="near" checked="checked"> Gotta Get Back
   </label>
   <label class="btn btn-default">
-    <input type="radio" name="distance"> Far
+    <input type="radio" name="distance" value="any"> We've Got Time
   </label>
 </div>
 <p style="margin-top:10px">
-	<button type="button" data-loading-text="Rolling..." class="btn btn-primary">
+	<button type="button" class="btn btn-primary">
 		Randomize and Lets Roll!
 	</button>
 </p>
