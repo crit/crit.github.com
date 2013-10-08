@@ -96,18 +96,22 @@
 	};
 
   self.bind = function() {
-    $('.app-control').bind('click', function(e){
-      e.preventDefault();
-      var data = $('form').serializeArray();
-      self.ref.child(data[0].value).set({
-        distance: data[3].value,
-        price: data[1].value,
-        service: data[2].value
-      }, function(error){
-        if (!error) document.location = 'data.html';
-        console.log(error);
-      });
-    });
+    $('.app-control').bind('click', self.action);
+  };
+
+  self.action = function(e) {
+    e.preventDefault();
+    var data = $('form').serializeArray();
+    self.ref.child(data[0].value).set({
+      price   : data[1].value,
+      service : data[2].value,
+      distance: data[3].value
+    }, self.refresh);
+  };
+
+  self.refresh = function(err) {
+    if (!error) document.location='';
+    alert(error);
   };
 
 	self.parse = function(e) {

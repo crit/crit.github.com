@@ -81,14 +81,18 @@
 
   self.build = function(snapshot) {
     $.each(snapshot.val(), self.render);
-    $('a.app-control').bind('click', function(e){
-      e.preventDefault();
-      var name = $(this).attr('data-name');
-      self.ref.child(name).remove(function(){
-        document.location='';
-      });
-    });
+    $('a.app-control').bind('click', self.bind);
   };
+
+  self.bind = function(e){
+    e.preventDefault();
+    var name = $(this).attr('data-name');
+    self.ref.child(name).remove(self.refresh);
+  };
+
+  self.refresh = function() {
+    document.location='';
+  }
 
   self.remove = function(name) {
     self.ref.child(name).remove();

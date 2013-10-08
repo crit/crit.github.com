@@ -71,37 +71,67 @@
   </label>
 </div>
 <p style="margin-top:10px">
-	<button type="button" class="btn btn-primary">
+	<button type="button" class="btn btn-primary app-control">
 		Randomize and Lets Roll!
 	</button>
 </p>
 
-<div class="well">
+<div class="well app-data-view">
 	Randomizing will happen here!
 </div>
 
   </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src='https://cdn.firebase.com/v0/firebase.js'></script>
 <script>
+(function($, undefined){
+  var self = {};
+
+  self.init = function(){
+    $('#stylesMenu a').bind('click', self.parse);
+  };
+
+  self.parse = function(e) {
+    e.preventDefault();
+    self.style = $(this).attr('href');
+    $('link').each(self.change);
+    return;
+  };
+
+  self.change = function() {
+    this.disabled = true;
+    if (self.style == "#" + this.title) this.disabled = false;
+  };
+
+  $(self.init); // ON DOM LOAD
+})(jQuery);
+
 (function($, undefined){
 	var self = {};
 
+  self.data = [];
+
 	self.init = function(){
-		$('#stylesMenu a').bind('click', self.parse);
+    self.ref = new Firebase("https://crit.firebaseio.com/roll");
+    self.ref.on('value', self.build);
+    $('.app-control').bind('click', self.bind);
 	};
 
-	self.parse = function(e) {
-		e.preventDefault();
-		self.style = $(this).attr('href');
-		$('link').each(self.change);
-		return;
-	};
+  self.build = function(snapshot) {
+    $.each(snapshot.val(), self.parse);
+    window.app_data = self.data;
+  };
 
-	self.change = function() {
-		this.disabled = true;
-		if (self.style == "#" + this.title) this.disabled = false;
-	};
+  self.parse = function(name, data) {
+    self.data.push(name);
+  };
+
+  self.bind = function(e) {
+    $('.app-data-view').text(
+      self.data[Math.floor(Math.random()*self.data.length)]
+    );
+  }
 
 	$(self.init) // ON DOM LOAD
 })(jQuery);
