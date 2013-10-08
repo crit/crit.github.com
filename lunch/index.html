@@ -3,8 +3,8 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Lets Roll!</title>
-  <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/amelia/bootstrap.min.css" rel="stylesheet" title="amelia">
-  <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/cerulean/bootstrap.min.css" rel="alternate stylesheet" title="cerulean">
+  <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/amelia/bootstrap.min.css" rel="alternate stylesheet" title="amelia">
+  <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/cerulean/bootstrap.min.css" rel="stylesheet" title="cerulean">
   <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/spacelab/bootstrap.min.css" rel="alternate stylesheet" title="spacelab">
   <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/journal/bootstrap.min.css" rel="alternate stylesheet" title="journal">
   <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/flatly/bootstrap.min.css" rel="alternate stylesheet" title="flatly">
@@ -43,13 +43,14 @@
   </div>
 
   <div class="container">
+<form>
 <h3>Price</h3>
 <div class="btn-group btn-group-justified" data-toggle="buttons">
   <label class="btn btn-default active">
     <input type="radio" name="price" value="cheap" checked="checked"> On a Budget
   </label>
   <label class="btn btn-default">
-    <input type="radio" name="price" value="any"> Not Worried
+    <input type="radio" name="price" value="pricey"> Not Worried
   </label>
 </div>
 <h3>Service</h3>
@@ -58,7 +59,7 @@
     <input type="radio" name="service" value="fast" checked="checked"> Food Now
   </label>
   <label class="btn btn-default">
-    <input type="radio" name="service" value="any"> Sit and Relax
+    <input type="radio" name="service" value="sitdown"> Sit and Relax
   </label>
 </div>
 <h3>Distance</h3>
@@ -67,19 +68,19 @@
     <input type="radio" name="distance" value="near" checked="checked"> Gotta Get Back
   </label>
   <label class="btn btn-default">
-    <input type="radio" name="distance" value="any"> We've Got Time
+    <input type="radio" name="distance" value="far"> We've Got Time
   </label>
 </div>
-<p style="margin-top:10px">
-	<button type="button" class="btn btn-primary app-control">
-		Randomize and Lets Roll!
-	</button>
-</p>
+<div class="form-group" style="margin-top:25px">
+  <button type="button" class="btn btn-primary btn-block app-control">
+    Randomize and Lets Roll!
+  </button>
+</div>
 
 <div class="well app-data-view">
 	Randomizing will happen here!
 </div>
-
+</form>
   </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
@@ -110,7 +111,15 @@
 (function($, undefined){
 	var self = {};
 
-  self.data = [];
+  self.data = {
+    all    : [],
+    cheap  : [],
+    pricey : [],
+    fast   : [],
+    sitdown: [],
+    near   : [],
+    far    : []
+  };
 
 	self.init = function(){
     self.ref = new Firebase("https://crit.firebaseio.com/roll");
@@ -124,14 +133,31 @@
   };
 
   self.parse = function(name, data) {
-    self.data.push(name);
+    self.data.all.push(name);
+    if (data.distance == 'near') self.data.near.push(name);
+    if (data.distance == 'far') self.data.far.push(name);
+
+    if (data.price == 'cheap') self.data.cheap.push(name);
+    if (data.price == 'pricey') self.data.pricey.push(name);
+
+    if (data.service == 'fast') self.data.fast.push(name);
+    if (data.service == 'sitdown') self.data.sitdown.push(name);
   };
 
-  self.bind = function(e) {
-    $('.app-data-view').text(
-      self.data[Math.floor(Math.random()*self.data.length)]
-    );
+  self.bind = function() {
+    var items = [], keys = [];
+    $.each($('form').serializeArray(), function(i, item){
+      items = items.concat(self.data[item.value]);
+      keys = keys.concat(item.value);
+    });
+    console.log(items);
+    console.log(keys);
+    $('.app-data-view').text(self.ran(items));
   }
+
+  self.ran = function(item) {
+    return item[Math.floor(Math.random()*item.length)];
+  };
 
 	$(self.init) // ON DOM LOAD
 })(jQuery);

@@ -109,9 +109,8 @@
     }, self.refresh);
   };
 
-  self.refresh = function(err) {
-    if (!error) document.location='';
-    alert(error);
+  self.refresh = function() {
+    document.location='';
   };
 
 	self.parse = function(e) {
