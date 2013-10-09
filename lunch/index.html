@@ -47,28 +47,28 @@
 <h3>Price</h3>
 <div class="btn-group btn-group-justified" data-toggle="buttons">
   <label class="btn btn-default active">
-    <input type="radio" name="price" value="cheap" checked="checked"> On a Budget
+    <input type="radio" name="cheap" value="1" checked="checked"> On a Budget
   </label>
   <label class="btn btn-default">
-    <input type="radio" name="price" value="pricey"> Not Worried
+    <input type="radio" name="cheap" value="0"> Not Worried
   </label>
 </div>
 <h3>Service</h3>
 <div class="btn-group btn-group-justified" data-toggle="buttons">
   <label class="btn btn-default active">
-    <input type="radio" name="service" value="fast" checked="checked"> Food Now
+    <input type="radio" name="fast" value="1" checked="checked"> Food Now
   </label>
   <label class="btn btn-default">
-    <input type="radio" name="service" value="sitdown"> Sit and Relax
+    <input type="radio" name="fast" value="0"> Sit and Relax
   </label>
 </div>
 <h3>Distance</h3>
 <div class="btn-group btn-group-justified" data-toggle="buttons">
   <label class="btn btn-default active">
-    <input type="radio" name="distance" value="near" checked="checked"> Gotta Get Back
+    <input type="radio" name="near" value="1" checked="checked"> Gotta Get Back
   </label>
   <label class="btn btn-default">
-    <input type="radio" name="distance" value="far"> We've Got Time
+    <input type="radio" name="near" value="0"> We've Got Time
   </label>
 </div>
 <div class="form-group" style="margin-top:25px">
@@ -78,7 +78,7 @@
 </div>
 
 <div class="well app-data-view">
-	Randomizing will happen here!
+	<span>Randomizing will happen here!</span>
 </div>
 </form>
   </div>
@@ -111,18 +111,10 @@
 (function($, undefined){
 	var self = {};
 
-  self.data = {
-    all    : [],
-    cheap  : [],
-    pricey : [],
-    fast   : [],
-    sitdown: [],
-    near   : [],
-    far    : []
-  };
+  self.data = [];
 
 	self.init = function(){
-    self.ref = new Firebase("https://crit.firebaseio.com/roll");
+    self.ref = new Firebase("https://crit.firebaseio.com/lunch");
     self.ref.on('value', self.build);
     $('.app-control').bind('click', self.bind);
 	};
@@ -132,31 +124,34 @@
     window.app_data = self.data;
   };
 
-  self.parse = function(name, data) {
-    self.data.all.push(name);
-    if (data.distance == 'near') self.data.near.push(name);
-    if (data.distance == 'far') self.data.far.push(name);
-
-    if (data.price == 'cheap') self.data.cheap.push(name);
-    if (data.price == 'pricey') self.data.pricey.push(name);
-
-    if (data.service == 'fast') self.data.fast.push(name);
-    if (data.service == 'sitdown') self.data.sitdown.push(name);
+  self.parse = function(id, data) {
+    self.data.push(data);
   };
 
   self.bind = function() {
-    var items = [], keys = [];
-    $.each($('form').serializeArray(), function(i, item){
-      items = items.concat(self.data[item.value]);
-      keys = keys.concat(item.value);
+    $('.app-data-view span').fadeOut(200, function(){
+      var s = {
+        cheap : parseInt($('.active input[name=cheap]').val()),
+        fast : parseInt($('.active input[name=fast]').val()),
+        near : parseInt($('.active input[name=near]').val())
+      }, items = [];
+
+      if (!s.cheap && !s.fast && !s.near) {
+        items = self.data;
+      } else {
+        $.each(self.data, function(i,item){
+          if (s.cheap && !item.cheap) return;
+          if (s.fast && !item.fast) return;
+          if (s.near && !item.near) return;
+          items.push(item);
+        });
+      }
+      $('.app-data-view span').text(self.ran(items)).fadeIn();
     });
-    console.log(items);
-    console.log(keys);
-    $('.app-data-view').text(self.ran(items));
   }
 
   self.ran = function(item) {
-    return item[Math.floor(Math.random()*item.length)];
+    return item[Math.floor(Math.random()*item.length)].name;
   };
 
 	$(self.init) // ON DOM LOAD

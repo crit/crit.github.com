@@ -51,28 +51,28 @@
   <h3>Price</h3>
   <div class="btn-group btn-group-justified" data-toggle="buttons">
     <label class="btn btn-default active">
-      <input type="radio" name="price" value="cheap" checked="checked"> Cheap
+      <input type="radio" name="cheap" value="1" checked="checked"> Cheap
     </label>
     <label class="btn btn-default">
-      <input type="radio" name="price" value="pricey"> Pricey
+      <input type="radio" name="cheap" value="0"> Pricey
     </label>
   </div>
   <h3>Service</h3>
   <div class="btn-group btn-group-justified" data-toggle="buttons">
     <label class="btn btn-default active">
-      <input type="radio" name="service" value="fast" checked="checked"> Fast
+      <input type="radio" name="fast" value="1" checked="checked"> Fast
     </label>
     <label class="btn btn-default">
-      <input type="radio" name="service" value="sitdown"> Sit-down
+      <input type="radio" name="fast" value="0"> Sit-down
     </label>
   </div>
   <h3>Distance</h3>
   <div class="btn-group btn-group-justified" data-toggle="buttons">
     <label class="btn btn-default active">
-      <input type="radio" name="distance" value="near" checked="checked"> Close
+      <input type="radio" name="near" value="1" checked="checked"> Close
     </label>
     <label class="btn btn-default">
-      <input type="radio" name="distance" value="far"> Far
+      <input type="radio" name="near" value="0"> Far
     </label>
   </div>
   <div class="form-group" style="margin-top:25px">
@@ -91,7 +91,7 @@
 
 	self.init = function(){
 		$('#stylesMenu a').bind('click', self.parse);
-    self.ref = new Firebase("https://crit.firebaseio.com/roll");
+    self.ref = new Firebase("https://crit.firebaseio.com/lunch");
     self.bind();
 	};
 
@@ -101,11 +101,14 @@
 
   self.action = function(e) {
     e.preventDefault();
-    var data = $('form').serializeArray();
-    self.ref.child(data[0].value).set({
-      price   : data[1].value,
-      service : data[2].value,
-      distance: data[3].value
+    var data = $('form').serializeArray(),
+      id = self.ref.push().name();
+    self.ref.child(id).set({
+      name  : data[0].value,
+      cheap : parseInt(data[1].value),
+      fast  : parseInt(data[2].value),
+      near  : parseInt(data[3].value),
+      id    : id
     }, self.refresh);
   };
 

@@ -63,7 +63,7 @@
 	var self = {};
 
   self.row = "<tr><td>[:name]</td><td>[:distance]</td><td>[:price]</td><td>[:service]</td><td>[:controls]</td></tr>";
-  self.button = '<a href="#" class="app-control" data-name="[:name]"><span class="glyphicon glyphicon-remove"></span></a>';
+  self.button = '<a href="#" class="app-control" data-id="[:id]"><span class="glyphicon glyphicon-remove"></span></a>';
 
   // simple string templates
   self.fill = function(src, obj){
@@ -75,7 +75,7 @@
 
 	self.init = function(){
 		$('#stylesMenu a').bind('click', self.parse);
-    self.ref = new Firebase("https://crit.firebaseio.com/roll");
+    self.ref = new Firebase("https://crit.firebaseio.com/lunch");
     self.ref.on('value', self.build);
 	};
 
@@ -86,8 +86,8 @@
 
   self.bind = function(e){
     e.preventDefault();
-    var name = $(this).attr('data-name');
-    self.ref.child(name).remove(self.refresh);
+    var id = $(this).attr('data-id');
+    self.ref.child(id).remove(self.refresh);
   };
 
   self.refresh = function() {
@@ -98,13 +98,13 @@
     self.ref.child(name).remove();
   };
 
-  self.render = function(name, data) {
+  self.render = function(id, data) {
     $('tbody').append(self.fill(self.row, {
-      name: name,
-      distance: data.distance,
-      price: data.price,
-      service: data.service,
-      controls: self.fill(self.button, {name: name})
+      name: data.name,
+      distance: data.near ? 'near' : 'far',
+      price: data.cheap ? 'cheap' : 'pricey',
+      service: data.fast ? 'fast' : 'relaxed',
+      controls: self.fill(self.button, {id: data.id})
     }));
   };
 
