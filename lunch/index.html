@@ -112,6 +112,7 @@
 	var self = {};
 
   self.data = [];
+  self.current = null;
 
 	self.init = function(){
     self.ref = new Firebase("https://crit.firebaseio.com/lunch");
@@ -140,13 +141,15 @@
         items = self.data;
       } else {
         $.each(self.data, function(i,item){
+          if (item.name == self.current) return;
           if (s.cheap && !item.cheap) return;
           if (s.fast && !item.fast) return;
           if (s.near && !item.near) return;
           items.push(item);
         });
       }
-      $('.app-data-view span').text(self.ran(items)).fadeIn();
+      self.current = self.ran(items);
+      $('.app-data-view span').text(self.current).fadeIn();
     });
   }
 
