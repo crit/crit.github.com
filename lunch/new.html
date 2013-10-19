@@ -3,12 +3,7 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Lets Roll!</title>
-  <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/amelia/bootstrap.min.css" rel="stylesheet" title="amelia">
-  <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/cerulean/bootstrap.min.css" rel="alternate stylesheet" title="cerulean">
-  <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/spacelab/bootstrap.min.css" rel="alternate stylesheet" title="spacelab">
-  <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/journal/bootstrap.min.css" rel="alternate stylesheet" title="journal">
-  <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/flatly/bootstrap.min.css" rel="alternate stylesheet" title="flatly">
-  <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/readable/bootstrap.min.css" rel="alternate stylesheet" title="readable">
+  <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/flatly/bootstrap.min.css" rel="stylesheet" title="flatly">
   <style>body {padding-top: 50px;}</style>
 </head>
 <body>
@@ -24,19 +19,9 @@
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
+          <li><a href="index.html">Home</a></li>
           <li><a href="new.html">Enter New </a></li>
           <li><a href="data.html">View Data</a></li>
-          <li class="dropdown">
-          <a id="stylesDrop" role="button" data-toggle="dropdown" href="#">Styles <b class="caret"></b></a>
-          <ul id="stylesMenu" class="dropdown-menu" role="menu" aria-labelledby="stylesDrop">
-          	<li role="presentation"><a role="menuitem" tabindex="-1" href="#amelia">Amelia</a></li>
-          	<li role="presentation"><a role="menuitem" tabindex="-1" href="#cerulean">Cerulean</a></li>
-          	<li role="presentation"><a role="menuitem" tabindex="-1" href="#spacelab">Spacelab</a></li>
-          	<li role="presentation"><a role="menuitem" tabindex="-1" href="#journal">Journal</a></li>
-          	<li role="presentation"><a role="menuitem" tabindex="-1" href="#flatly">Flatly</a></li>
-          	<li role="presentation"><a role="menuitem" tabindex="-1" href="#readable">Readable</a></li>
-          </ul>
-        </li>
         </ul>
       </div><!--/.nav-collapse -->
     </div>
@@ -90,7 +75,6 @@
 	var self = {};
 
 	self.init = function(){
-		$('#stylesMenu a').bind('click', self.parse);
     self.ref = new Firebase("https://crit.firebaseio.com/lunch");
     self.bind();
 	};
@@ -115,18 +99,6 @@
   self.refresh = function() {
     document.location='';
   };
-
-	self.parse = function(e) {
-		e.preventDefault();
-		self.style = $(this).attr('href');
-		$('link').each(self.change);
-		return;
-	};
-
-	self.change = function() {
-		this.disabled = true;
-		if (self.style == "#" + this.title) this.disabled = false;
-	};
 
 	$(self.init) // ON DOM LOAD
 })(jQuery);

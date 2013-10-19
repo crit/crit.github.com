@@ -3,12 +3,7 @@
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Lets Roll!</title>
-  <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/amelia/bootstrap.min.css" rel="stylesheet" title="amelia">
-  <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/cerulean/bootstrap.min.css" rel="alternate stylesheet" title="cerulean">
-  <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/spacelab/bootstrap.min.css" rel="alternate stylesheet" title="spacelab">
-  <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/journal/bootstrap.min.css" rel="alternate stylesheet" title="journal">
-  <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/flatly/bootstrap.min.css" rel="alternate stylesheet" title="flatly">
-  <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/readable/bootstrap.min.css" rel="alternate stylesheet" title="readable">
+  <link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/flatly/bootstrap.min.css" rel="stylesheet" title="flatly">
   <style>body {padding-top: 50px;}</style>
 </head>
 <body>
@@ -26,17 +21,6 @@
         <ul class="nav navbar-nav">
           <li><a href="new.html">Enter New </a></li>
           <li><a href="data.html">View Data</a></li>
-          <li class="dropdown">
-          <a id="stylesDrop" role="button" data-toggle="dropdown" href="#">Styles <b class="caret"></b></a>
-          <ul id="stylesMenu" class="dropdown-menu" role="menu" aria-labelledby="stylesDrop">
-          	<li role="presentation"><a role="menuitem" tabindex="-1" href="#amelia">Amelia</a></li>
-          	<li role="presentation"><a role="menuitem" tabindex="-1" href="#cerulean">Cerulean</a></li>
-          	<li role="presentation"><a role="menuitem" tabindex="-1" href="#spacelab">Spacelab</a></li>
-          	<li role="presentation"><a role="menuitem" tabindex="-1" href="#journal">Journal</a></li>
-          	<li role="presentation"><a role="menuitem" tabindex="-1" href="#flatly">Flatly</a></li>
-          	<li role="presentation"><a role="menuitem" tabindex="-1" href="#readable">Readable</a></li>
-          </ul>
-        </li>
         </ul>
       </div><!--/.nav-collapse -->
     </div>
@@ -87,28 +71,6 @@
 <script src='https://cdn.firebase.com/v0/firebase.js'></script>
 <script>
 (function($, undefined){
-  var self = {};
-
-  self.init = function(){
-    $('#stylesMenu a').bind('click', self.parse);
-  };
-
-  self.parse = function(e) {
-    e.preventDefault();
-    self.style = $(this).attr('href');
-    $('link').each(self.change);
-    return;
-  };
-
-  self.change = function() {
-    this.disabled = true;
-    if (self.style == "#" + this.title) this.disabled = false;
-  };
-
-  $(self.init); // ON DOM LOAD
-})(jQuery);
-
-(function($, undefined){
 	var self = {};
 
   self.data = [];
@@ -135,26 +97,30 @@
         cheap : parseInt($('.active input[name=cheap]').val()),
         fast : parseInt($('.active input[name=fast]').val()),
         near : parseInt($('.active input[name=near]').val())
-      }, items = [];
+      }, show = null;
 
-      if (!s.cheap && !s.fast && !s.near) {
-        items = self.data;
-      } else {
-        $.each(self.data, function(i,item){
-          if (item.name == self.current) return;
-          if (s.cheap && !item.cheap) return;
-          if (s.fast && !item.fast) return;
-          if (s.near && !item.near) return;
-          items.push(item);
-        });
-      }
-      self.current = self.ran(items);
-      $('.app-data-view span').text(self.current).fadeIn();
+      items = self.data.filter(function(item){
+        return item.id != self.current &&
+          (s.cheap == item.cheap) &&
+          (s.fast == item.fast) &&
+          (s.near == item.near);
+      });
+
+      if (!items.length) {
+        $('.app-data-view span').text('No other options').fadeIn();
+        self.current = null;
+        return;
+      };
+
+      show = self.ran(items);
+      self.current = show.id;
+
+      $('.app-data-view span').text(show.name).fadeIn();
     });
   }
 
   self.ran = function(item) {
-    return item[Math.floor(Math.random()*item.length)].name;
+    return item[Math.floor(Math.random()*item.length)];
   };
 
 	$(self.init) // ON DOM LOAD
