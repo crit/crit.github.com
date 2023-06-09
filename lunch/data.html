@@ -45,44 +45,44 @@
 <script src='https://cdn.firebase.com/v0/firebase.js'></script>
 <script>
 (function($, undefined){
-	var self = {};
+  const self = {};
 
   self.row = "<tr><td>[:name]</td><td>[:distance]</td><td>[:price]</td><td>[:service]</td><td>[:controls]</td></tr>";
   self.button = '<a href="#" class="app-control" data-id="[:id]"><span class="glyphicon glyphicon-remove"></span></a>';
 
   // simple string templates
-  self.fill = function(src, obj){
+  self.fill = (src, obj) => {
     $.each(obj, function(k,v){
       src = src.replace('[:'+k+']', v);
     });
     return src;
   };
 
-	self.init = function(){
+  self.init = () => {
     self.ref = new Firebase("https://crit.firebaseio.com/lunch");
     self.ref.on('value', self.build);
-	};
+  };
 
-  self.build = function(snapshot) {
+  self.build = (snapshot) => {
     $.each(snapshot.val(), self.render);
     $('a.app-control').bind('click', self.bind);
   };
 
-  self.bind = function(e){
+  self.bind = (e) => {
     e.preventDefault();
-    var id = $(this).attr('data-id');
+    const id = $(this).attr('data-id');
     self.ref.child(id).remove(self.refresh);
   };
 
-  self.refresh = function() {
+  self.refresh = () => {
     document.location='';
   }
 
-  self.remove = function(name) {
+  self.remove = (name) => {
     self.ref.child(name).remove();
   };
 
-  self.render = function(id, data) {
+  self.render = (id, data) => {
     $('tbody').append(self.fill(self.row, {
       name: data.name,
       distance: data.near ? 'near' : 'far',
@@ -92,7 +92,7 @@
     }));
   };
 
-	$(self.init) // ON DOM LOAD
+  $(self.init) // ON DOM LOAD
 })(jQuery);
 </script>
 </body>

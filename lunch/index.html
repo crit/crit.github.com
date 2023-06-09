@@ -71,51 +71,55 @@
 <script src='https://cdn.firebase.com/v0/firebase.js'></script>
 <script>
 (function($, undefined){
-	var self = {};
+  const self = {};
 
   self.data = [];
   self.current = null;
 
-	self.init = function(){
+  self.init = () => {
     self.ref = new Firebase("https://crit.firebaseio.com/lunch");
     self.ref.on('value', self.build);
     $('.app-control').bind('click', self.bind);
-	};
+  };
 
-  self.build = function(snapshot) {
+  self.build = (snapshot) => {
     $.each(snapshot.val(), self.parse);
     window.app_data = self.data;
   };
 
-  self.parse = function(id, data) {
+  self.parse = (id, data) => {
     self.data.push(data);
   };
 
-  self.bind = function() {
-    $('.app-data-view span').fadeOut(200, function(){
-      var s = {
+  self.bind = () => {
+    const span = $('.app-data-view span')
+
+    span.fadeOut(200, () => {
+      const s = {
         cheap : parseInt($('.active input[name=cheap]').val()),
         fast : parseInt($('.active input[name=fast]').val()),
         near : parseInt($('.active input[name=near]').val())
-      }, show = null;
+      }
 
-      items = self.data.filter(function(item){
-        return item.id != self.current &&
-          (s.cheap == item.cheap) &&
-          (s.fast == item.fast) &&
-          (s.near == item.near);
+      let show = null;
+
+      const items = self.data.filter(function(item){
+        return item.id !== self.current &&
+          (s.cheap === item.cheap) &&
+          (s.fast === item.fast) &&
+          (s.near === item.near);
       });
 
       if (!items.length) {
         $('.app-data-view span').text('No other options').fadeIn();
         self.current = null;
         return;
-      };
+      }
 
       show = self.ran(items);
       self.current = show.id;
 
-      $('.app-data-view span').text(show.name).fadeIn();
+      span.text(show.name).fadeIn();
     });
   }
 

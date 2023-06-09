@@ -72,21 +72,21 @@
 <script src='https://cdn.firebase.com/v0/firebase.js'></script>
 <script>
 (function($, undefined){
-	var self = {};
+  const self = {};
 
-	self.init = function(){
+  self.init = () => {
     self.ref = new Firebase("https://crit.firebaseio.com/lunch");
     self.bind();
-	};
+  };
 
-  self.bind = function() {
+  self.bind = () => {
     $('.app-control').bind('click', self.action);
   };
 
-  self.action = function(e) {
+  self.action = (e) => {
     e.preventDefault();
-    var data = $('form').serializeArray(),
-      id = self.ref.push().name();
+    const data = $('form').serializeArray(), id = self.ref.push().name();
+
     self.ref.child(id).set({
       name  : data[0].value,
       cheap : parseInt(data[1].value),
@@ -96,11 +96,11 @@
     }, self.refresh);
   };
 
-  self.refresh = function() {
+  self.refresh = () => {
     document.location='';
   };
 
-	$(self.init) // ON DOM LOAD
+  $(self.init) // ON DOM LOAD
 })(jQuery);
 </script>
 </body>
