@@ -19,7 +19,6 @@
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          <li><a href="new.html">Enter New </a></li>
           <li><a href="data.html">View Data</a></li>
         </ul>
       </div><!--/.nav-collapse -->
@@ -57,38 +56,27 @@
 </div>
 <div class="form-group" style="margin-top:25px">
   <button type="button" class="btn btn-primary btn-block app-control">
-    Randomize and Lets Roll!
+    Randomize and Let's Roll!
   </button>
 </div>
 
-<div class="well app-data-view">
+<h3 class="well app-data-view text-center">
 	<span>Randomizing will happen here!</span>
-</div>
+</h3>
 </form>
   </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-<script src='https://cdn.firebase.com/v0/firebase.js'></script>
+<script src="data.js"></script>
 <script>
 (function($, undefined){
   const self = {};
 
-  self.data = [];
+  self.data = Data;
   self.current = null;
 
   self.init = () => {
-    self.ref = new Firebase("https://crit.firebaseio.com/lunch");
-    self.ref.on('value', self.build);
     $('.app-control').bind('click', self.bind);
-  };
-
-  self.build = (snapshot) => {
-    $.each(snapshot.val(), self.parse);
-    window.app_data = self.data;
-  };
-
-  self.parse = (id, data) => {
-    self.data.push(data);
   };
 
   self.bind = () => {
@@ -96,9 +84,9 @@
 
     span.fadeOut(200, () => {
       const s = {
-        cheap : parseInt($('.active input[name=cheap]').val()),
-        fast : parseInt($('.active input[name=fast]').val()),
-        near : parseInt($('.active input[name=near]').val())
+        cheap : parseInt($('.active input[name=cheap]').val()) === 1,
+        fast : parseInt($('.active input[name=fast]').val()) === 1,
+        near : parseInt($('.active input[name=near]').val()) === 1
       }
 
       let show = null;

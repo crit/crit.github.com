@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Game Night</title>
+    <link rel="stylesheet" href="bootstrap.min.css">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar navbar-expand bg-primary" data-bs-theme="dark">
+    <div class="container-fluid">
+        <ul class="navbar-nav me-auto">
+            <li class="nav-item">
+                <a href="#" id="random-nav" data-target="random-view" class="nav-link active">Random</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" id="data-nav" data-target="data-view" class="nav-link">Data</a>
+            </li>
+            <li class="nav-item">
+                <a href="#" id="enter-nav" data-target="enter-view" class="nav-link">New</a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<!-- APP -->
+<div class="container mt-3">
+    <!-- Random -->
+    <div id="random-view" class="row view">
+        <h1>Randomizer View</h1>
+    </div>
+
+    <!-- Data -->
+    <div id="data-view" class="row view visually-hidden">
+        <h1>Data View</h1>
+    </div>
+
+    <!-- New -->
+    <div id="enter-view" class="row view visually-hidden">
+        <div class="card mb-5">
+            <div class="card-body">
+                <h5 class="card-title mb-4">Enter New Food</h5>
+                <form id="food-form" class="form-group">
+                    <label for="food" class="form-label">Food Name</label>
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="food" placeholder="Ice cream"/>
+                        <button class="btn btn-primary" type="submit">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="card mb-5">
+            <div class="card-body">
+                <h5 class="card-title mb-4">Enter New Drink</h5>
+                <form id="drink-form" class="form-group">
+                    <label for="drink" class="form-label">Drink Name</label>
+                    <div class="input-group">
+                        <input id="drink" type="text" class="form-control" placeholder="Coke Cola">
+                        <button class="btn btn-primary" type="submit">Save</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.firebase.com/v0/firebase.js"></script>
+<script src="main.js"></script>
+<script>
+    const app = new App()
+    const store = new Store()
+
+    app.store(store)
+
+    app.nav("random-nav")
+    app.nav("data-nav")
+    app.nav("enter-nav")
+
+    app.form("drink-form", Drink)
+    app.form("food-form", Food)
+</script>
+</body>
+</html>

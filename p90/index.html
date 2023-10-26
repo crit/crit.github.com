@@ -73,7 +73,7 @@
 
 	self.stage = function(cmd, val) {
 		val = val || false;
-		if (cmd == 'add week') $('.container').append(val);
+		if (cmd === 'add week') $('.container').append(val);
 	}
 
 	$(self.init); // ON DOM LOAD

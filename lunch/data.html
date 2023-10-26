@@ -19,8 +19,6 @@
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="new.html">Enter New </a></li>
           <li><a href="data.html">View Data</a></li>
         </ul>
       </div><!--/.nav-collapse -->
@@ -35,20 +33,18 @@
         <th>Distance</th>
         <th>Price</th>
         <th>Service</th>
-        <th></th>
       </thead>
       <tbody></tbody>
     </table>
   </div>
 <script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
-<script src='https://cdn.firebase.com/v0/firebase.js'></script>
+<script src="data.js"></script>
 <script>
 (function($, undefined){
-  const self = {};
+  const self = {data: Data};
 
-  self.row = "<tr><td>[:name]</td><td>[:distance]</td><td>[:price]</td><td>[:service]</td><td>[:controls]</td></tr>";
-  self.button = '<a href="#" class="app-control" data-id="[:id]"><span class="glyphicon glyphicon-remove"></span></a>';
+  self.row = "<tr><td>[:name]</td><td>[:distance]</td><td>[:price]</td><td>[:service]</td></tr>";
 
   // simple string templates
   self.fill = (src, obj) => {
@@ -59,12 +55,11 @@
   };
 
   self.init = () => {
-    self.ref = new Firebase("https://crit.firebaseio.com/lunch");
-    self.ref.on('value', self.build);
+    self.build()
   };
 
-  self.build = (snapshot) => {
-    $.each(snapshot.val(), self.render);
+  self.build = () => {
+    self.data.forEach(self.render)
     $('a.app-control').bind('click', self.bind);
   };
 
@@ -82,13 +77,12 @@
     self.ref.child(name).remove();
   };
 
-  self.render = (id, data) => {
+  self.render = (data) => {
     $('tbody').append(self.fill(self.row, {
       name: data.name,
       distance: data.near ? 'near' : 'far',
       price: data.cheap ? 'cheap' : 'pricey',
       service: data.fast ? 'fast' : 'relaxed',
-      controls: self.fill(self.button, {id: data.id})
     }));
   };
 
